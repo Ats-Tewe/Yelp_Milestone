@@ -17,11 +17,10 @@ plausible review text in the user's voice. Built with **CrewAI Flows**, the
 | **1** | **Index-Reuse mechanism integration** | ✅ | [`src/first_crew/crews.py::_create_rag_tool`](src/first_crew/crews.py) — sqlite3 probe + `FixedJSONSearchToolSchema` swap, mirroring the reference pattern. `else`-branch raises instead of silently re-indexing, defending against Pitfall 1. |
 | **2** | **Crew with `Process.sequential` (Pattern 2: Collaborative Single Task)** | ✅ | [`crews.py::pattern2_collaborative_crew()`](src/first_crew/crews.py) · demo entry: [`demo_pattern2_crew.py`](demo_pattern2_crew.py). Prediction Modeler is the primary (`allow_delegation=True`); User Profiler + Item Analyst + Calibrator are peers. |
 | **3** | **Crew with `Process.hierarchical` (Manager Agent)** | ✅ | [`crews.py::hierarchical_predict_crew()`](src/first_crew/crews.py) · demo entry: [`demo_hierarchical_crew.py`](demo_hierarchical_crew.py). Explicit `manager_agent=` (role `review_prediction_manager`) routes & validates work across the 4 workers. |
-| **4** | **New agents to strengthen the crew** | ✅ | Calibrator (`calibrator` in [`agents.yaml`](src/first_crew/config/agents.yaml)) + Manager (`review_prediction_manager`). The Calibrator directly attacks the regression-to-mean failure (see §Current findings). |
+| **4** | **New agents to strengthen the crew** | ✅ | Calibrator (`calibrator` in [`agents.yaml`](src/first_crew/config/agents.yaml)) + Manager (`review_prediction_manager`). The Calibrator directly attacks the regression-to-mean failure (see Current findings). |
 | **B1** | **Bonus: EDA knowledge source** | ✅ | [`build_eda_knowledge.py`](build_eda_knowledge.py) → [`docs/EDA_Knowledge.md`](docs/EDA_Knowledge.md) (4.9 KB, derived from 382k reviews / 26k users / 22k items). Mounted via `StringKnowledgeSource` on every Crew, with explicit `sentence-transformer/BAAI/bge-small-en-v1.5` embedder to defend against Pitfall 4. |
 | **B2** | **Bonus: Crew integrated into a CrewAI Flow** | ✅ | [`src/first_crew/flow.py`](src/first_crew/flow.py) — the default pipeline. `@start → profile_user → calibrate_user ∧ profile_item → predict` with Pydantic state. |
 
-**Performance evaluation (worth 10% of week-10 grade):** see §Results below.
 Headline: **50 rows · 100% success · MAE 0.71 stars · text-cosine 0.7974**.
 
 ---
