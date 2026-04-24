@@ -12,12 +12,12 @@ A multi-agent pipeline that predicts **(a) star rating** and **(b) a plausible r
 
 | # | Deliverable | Status |
 |---|---|:---:|
-| 1 | Index-Reuse RAG mechanism | ✅ |
-| 2 | `Process.sequential` crew — Pattern 2 Collaborative | ✅ |
-| 3 | `Process.hierarchical` crew — Manager Agent | ✅ |
-| 4 | New agents: Calibrator + Manager | ✅ |
-| B1 | Bonus: EDA knowledge source | ✅ |
-| B2 | Bonus: CrewAI Flow integration | ✅ |
+| 1 | Index-Reuse RAG mechanism | Done |
+| 2 | `Process.sequential` crew — Pattern 2 Collaborative | Done |
+| 3 | `Process.hierarchical` crew — Manager Agent | Done |
+| 4 | New agents: Calibrator + Manager | Done |
+| B1 | Bonus: EDA knowledge source | Done |
+| B2 | Bonus: CrewAI Flow integration | Done |
 
 ---
 
@@ -200,16 +200,3 @@ assignment_1/
 | Package manager | [Astral uv](https://docs.astral.sh/uv/) |
 
 ---
-
-## Pitfall Defence
-
-| Pitfall | Mitigation |
-|---|---|
-| `json_path` triggers 3-hour re-chunking | `RuntimeError` in else-branch; `FixedJSONSearchToolSchema` hides `json_path` from LLM |
-| ChromaDB singleton collision | Production code touches ChromaDB only via `JSONSearchTool` — no second `PersistentClient` |
-| Vague tool descriptions | `search_historical_reviews` includes input contract, example query, and when-not-to-use rule |
-| `StringKnowledgeSource` silently uses OpenAI | Explicit `sentence-transformer/BAAI/bge-small-en-v1.5` embedder passed to every Crew |
-
----
-
-*Questions? Contact `atsbaha.teweldemedhn@mu.edu.et` · [CrewAI docs](https://docs.crewai.com/) · [CrewAI GitHub](https://github.com/crewAIInc/crewAI)*
