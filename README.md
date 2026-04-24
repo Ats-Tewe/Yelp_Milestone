@@ -304,8 +304,6 @@ invaluable when debugging the Phi-3 and RAG failures above.
 ```
 assignment_1/
 ├── README.md                        ← this file
-├── PROGRESS.md                      ← session-by-session journal
-├── build_report.py                  ← regenerates the .docx
 ├── build_eda_knowledge.py           ← regenerates docs/EDA_Knowledge.md
 ├── demo_pattern2_crew.py            ← Lab 1 — Pattern-2 Collaborative Single Task
 ├── demo_hierarchical_crew.py        ← Lab 2 — Process.hierarchical
@@ -392,7 +390,6 @@ apply to every contribution.
 - **Vector DB:** [ChromaDB](https://www.trychroma.com/) with the instructor's pre-built `chroma.sqlite3`
 - **Embeddings:** [BAAI/bge-small-en-v1.5](https://huggingface.co/BAAI/bge-small-en-v1.5) (384-dim, CPU-friendly)
 - **Package manager:** [Astral `uv`](https://docs.astral.sh/uv/)
-- **Report generator:** `python-docx` (powers `build_report.py`)
 
 ---
 
