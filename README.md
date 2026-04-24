@@ -1,27 +1,18 @@
 # first_crew — A CrewAI Multi-Agent System for Yelp Review Prediction
 
-> **Course:** LLM (w8 2026 Spring) · **Instructor:** Yu-Chieh Jack Ho
 > **Track:** AgentSociety Challenge — Track 1 (User Modeling / Recommendation)
-> **Author:** Atsbaha Teweldemedhn · `atsbaha.teweldemedhn@mu.edu.et`
 
 A multi-agent pipeline that, given a `(user_id, item_id)` pair from the Yelp
 dataset, predicts **(a)** the star rating that user would give and **(b)** a
 plausible review text in the user's voice. Built with **CrewAI Flows**, the
-**Nvidia Build API** (`minimaxai/minimax-m2.7`, free tier), and the
-instructor's pre-built **ChromaDB index** for retrieval-augmented context.
+**Nvidia Build API** (`minimaxai/minimax-m2.7`, free tier), **ChromaDB index** is used for retrieval-augmented context.
 
-This repository delivers **every item** on the week-10 lab checklist
-(Items 1-4 + both Bonuses) and includes a second fully-wired `README`-style
-analysis in [`Milestone_1_Report.docx`](Milestone_1_Report.docx) (~25 pages,
-tutorial-style).
 
----
-
-## 📋 Deliverables Checklist (Professor's week-10 requirements)
+## 📋 Deliverables
 
 | # | Deliverable | Status | Where it lives in this repo |
 |---|---|:---:|---|
-| **1** | **Index-Reuse mechanism integration** | ✅ | [`src/first_crew/crews.py::_create_rag_tool`](src/first_crew/crews.py) — sqlite3 probe + `FixedJSONSearchToolSchema` swap, mirroring the reference pattern. `else`-branch raises instead of silently re-indexing, defending against Pitfall 1. |
+| **1** | **Index-Reuse mechanism integration** |  | [`src/first_crew/crews.py::_create_rag_tool`](src/first_crew/crews.py) — sqlite3 probe + `FixedJSONSearchToolSchema` swap, mirroring the reference pattern. `else`-branch raises instead of silently re-indexing, defending against Pitfall 1. |
 | **2** | **Crew with `Process.sequential` (Pattern 2: Collaborative Single Task)** | ✅ | [`crews.py::pattern2_collaborative_crew()`](src/first_crew/crews.py) · demo entry: [`demo_pattern2_crew.py`](demo_pattern2_crew.py). Prediction Modeler is the primary (`allow_delegation=True`); User Profiler + Item Analyst + Calibrator are peers. |
 | **3** | **Crew with `Process.hierarchical` (Manager Agent)** | ✅ | [`crews.py::hierarchical_predict_crew()`](src/first_crew/crews.py) · demo entry: [`demo_hierarchical_crew.py`](demo_hierarchical_crew.py). Explicit `manager_agent=` (role `review_prediction_manager`) routes & validates work across the 4 workers. |
 | **4** | **New agents to strengthen the crew** | ✅ | Calibrator (`calibrator` in [`agents.yaml`](src/first_crew/config/agents.yaml)) + Manager (`review_prediction_manager`). The Calibrator directly attacks the regression-to-mean failure (see §Current findings). |
