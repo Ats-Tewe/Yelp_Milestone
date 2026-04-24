@@ -5,8 +5,7 @@
 A multi-agent pipeline that, given a `(user_id, item_id)` pair from the Yelp
 dataset, predicts **(a)** the star rating that user would give and **(b)** a
 plausible review text in the user's voice. Built with **CrewAI Flows**, the
-**Nvidia Build API** (`minimaxai/minimax-m2.7`, free tier), and the
-instructor's pre-built **ChromaDB index** for retrieval-augmented context.
+**Nvidia Build API** (`minimaxai/minimax-m2.7`, free tier), and **ChromaDB index** is used for retrieval-augmented context.
 
 
 ---
