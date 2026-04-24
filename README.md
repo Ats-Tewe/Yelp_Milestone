@@ -10,7 +10,7 @@ plausible review text in the user's voice. Built with **CrewAI Flows**, the
 
 ---
 
-## 📋 Deliverables Checklist (Professor's week-10 requirements)
+## 📋 Deliverables
 
 | # | Deliverable | Status | Where it lives in this repo |
 |---|---|:---:|---|
@@ -29,8 +29,7 @@ Headline: **50 rows · 100% success · MAE 0.71 stars · text-cosine 0.7974**.
 
 Ensure you have **Python ≥ 3.10, < 3.14** installed.
 This project uses **[Astral `uv`](https://docs.astral.sh/uv/)** exclusively
-for dependency and environment management (per the repo's
-`.agents/rules/uv-package-management.md`).
+for dependency and environment management.
 
 ### 1. Install `uv`
 
@@ -83,7 +82,7 @@ offline), set `LLM_PROVIDER=ollama` and start Ollama locally. The
 
 ### Install the pre-built ChromaDB index (one-time)
 
-The instructor distributes a 4.7 GB `chroma_index/chroma.sqlite3` containing
+A 4.7 GB `chroma_index/chroma.sqlite3` containing
 100k+ indexed reviews. Copy it into the CrewAI storage path so the RAG
 layer finds it:
 
@@ -116,7 +115,7 @@ Expected output: both rows complete, `results/predictions.jsonl` has two
 lines with `"ok": true`, and the terminal prints `=== Metrics ===` with MAE
 and cosine.
 
-### Full 50-row deliverable run (~20-25 minutes)
+### Full 50-row deliverable run
 
 ```bash
 rm -f results/predictions.jsonl          # clean slate
@@ -134,7 +133,7 @@ The runner is **fully resumable**. Each completed row is appended to
 file, builds a set of completed `(user_id, item_id)` pairs, and skips them.
 A crash at row 37 costs you only the in-flight row.
 
-### Alternative crew topologies (Lab Tasks 1 & 2 demos)
+### Alternative crew topologies
 
 ```bash
 # Pattern 2 — Collaborative Single Task (hub-and-spoke with delegation)
@@ -156,8 +155,7 @@ topology and prints the crew's final output.
 1. **CrewAI** — orchestration of five specialist agents.
 2. **RAG (ChromaDB + sentence-transformer)** — semantic retrieval over the
    historical-review corpus.
-3. **OpenEvolve** — deferred to Milestone 2. YAML-first prompt structure
-   is already in place so the prompts become the optimisation target.
+3. **OpenEvolve** — Future.
 
 ### Crew Members (5 Agents + 1 Manager)
 
@@ -170,7 +168,7 @@ lives in Python** — `crews.py` only assembles.
 |---|---|---|---|---|
 | 1 | **`user_profiler`** | Characterise the reviewer's taste, writing style, and rating tendencies | None (user record + 10 recent reviews pre-injected as JSON) | Markdown user profile |
 | 2 | **`item_analyst`** | Extract the strengths, customer experience, and notable attributes of a business | `search_historical_reviews` (RAG over the review corpus) | Markdown business evaluation |
-| 3 | **`calibrator`** | *New agent (Lab 4)*. Attack regression-to-mean by deriving an `expected_range` + `most_likely_rating` + `confidence` from the user's most extreme past reviews | None (top-3 extremes are pre-computed deterministically and injected) | Markdown calibration report |
+| 3 | **`calibrator`** | *New agent *. Attack regression-to-mean by deriving an `expected_range` + `most_likely_rating` + `confidence` from the user's most extreme past reviews | None (top-3 extremes are pre-computed deterministically and injected) | Markdown calibration report |
 | 4 | **`prediction_modeler`** | Synthesise the three profile reports into a star + review-text prediction; **rule #1: stars MUST fall inside the Calibrator's expected_range** | None | Strict JSON `{"stars": …, "review": …}` |
 | +1 | **`review_prediction_manager`** | *Hierarchical-variant only.* Sits above the team, delegates to workers, validates each result | None | Orchestration only |
 
@@ -198,7 +196,7 @@ lives in Python** — `crews.py` only assembles.
                └──────────┘
 ```
 
-### Two Alternative Topologies (Lab Tasks 1 & 2)
+### Two Alternative Topologies
 
 | Lab | Factory | Topology | Primary/Manager | Demo |
 |---|---|---|---|---|
@@ -246,7 +244,7 @@ Every Crew mounts it via `knowledge_sources=[...]`. Key stats the agents see:
 - Review length by star (1-2★ reviews average 139-144 words; 5★ reviews average 98).
 - Global mean business star: **3.60**.
 
-**Pitfall 4 defended:** the embedder is set explicitly to
+**Note:** the embedder is set explicitly to
 `sentence-transformer/BAAI/bge-small-en-v1.5`; a dedicated
 `collection_name="eda_knowledge_bge_small_v1"` avoids colliding with the
 pre-existing `knowledge_crew` collection in `chroma.sqlite3`.
@@ -281,7 +279,7 @@ Final Answer). See `crews.py::calibrator_crew` for the full design note.
 **Observation 1 — The Phi-3 local model catastrophically failed at scale.**
 Initial runs with `ollama/phi3` produced **73% empty reviews** due to a 4K
 context overflow on heavy-tail users. Pivoting to `minimax-m2.7` via
-Nvidia Build (the instructor's primary path) eliminated the failure
+Nvidia Build eliminated the failure
 entirely. Phi-3 remains as an `else`-branch fallback in `crews.py` for
 offline development.
 
@@ -306,7 +304,6 @@ invaluable when debugging the Phi-3 and RAG failures above.
 ```
 assignment_1/
 ├── README.md                        ← this file
-├── Milestone_1_Report.docx          ← ~25-page tutorial report (optional depth)
 ├── PROGRESS.md                      ← session-by-session journal
 ├── build_report.py                  ← regenerates the .docx
 ├── build_eda_knowledge.py           ← regenerates docs/EDA_Knowledge.md
